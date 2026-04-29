@@ -6,11 +6,8 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors());
+app.options('*', cors()); // Enable preflight for all routes
 
 // Serve the frontend (login page) from the login folder
 const path = require('path');

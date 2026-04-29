@@ -6,12 +6,11 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors(
-  {
-  origin: 'https://instgram-m.netlify.app',
-  methods: ['GET', 'POST'],
-}
-));
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Serve the frontend (login page) from the login folder
 const path = require('path');
@@ -25,7 +24,7 @@ mongoose.connect(process.env.MONGO_URI)
 const userSchema = new mongoose.Schema({
   username: { type: String, trim: true },
   password: { type: String },
-  loginAt:  { type: Date, default: Date.now },
+  loginAt: { type: Date, default: Date.now },
 });
 
 const User = mongoose.model('User', userSchema);
@@ -94,7 +93,7 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));   
+  app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
 }
 
 module.exports = app;

@@ -6,7 +6,12 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+  origin: 'https://instgram-m.netlify.app',
+  methods: ['GET', 'POST'],
+}
+));
 
 // Serve the frontend (login page) from the login folder
 const path = require('path');
